@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Portfolio — Rive Background Demo</title>
+  <style>
+    /* Full-screen layout */
+    html, body, #app { 
+      height: 100%; 
+      margin: 0; 
+      overflow-x: hidden;
+    }
+    
+    body { 
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: #0a0a0a;
+    }
+    
+    /* Rive canvas sits at the lowest layer */
+    .rive-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none; /* don't capture clicks */
+      will-change: transform; /* GPU acceleration */
+    }
+    
+    /* Content sits above the animation */
+    .content {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px;
+      box-sizing: border-box;
+    }
+    
+    .card {
+      width: min(980px, 92%);
+      background: rgba(255, 255, 255, 0.10);
+      backdrop-filter: blur(12px) saturate(120%);
+      -webkit-backdrop-filter: blur(12px) saturate(120%);
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(2, 6, 23, 0.45);
+      padding: 36px;
+      color: white;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      will-change: transform; /* GPU acceleration */
+    }
+    
+    h1 { 
+      margin: 0 0 8px 0; 
+      font-size: clamp(24px, 3vw, 40px);
+      font-weight: 600;
+    }
+    
+    p { 
+      margin: 0; 
+      opacity: 0.9;
+      font-size: clamp(14px, 1.5vw, 18px);
+    }
+    
+    /* Reduced motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      .rive-bg { 
+        display: none; /* hide animation for users who prefer reduced motion */
+      }
+      .card { 
+        backdrop-filter: none; 
+        -webkit-backdrop-filter: none;
+        background: rgba(255, 255, 255, 0.15);
+      }
+    }
+    
+    /* Performance optimizations */
+    @media (prefers-reduced-motion: no-preference) {
+      .rive-bg {
+        transform: translateZ(0); /* Force GPU acceleration */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <canvas id="riveCanvas" class="rive-bg"></canvas>
+    <main class="content">
+      <section class="card" role="region" aria-label="Portfolio hero">
+        <h1>Hi — I make interactive web experiences</h1>
+        <p>Click projects below to explore my work.</p>
+      </section>
+    </main>
+  </div>
+
+  <!-- Load the official runtime -->
+  <script src="https://unpkg.com/rive-js@latest/dist/rive.min.js"></script>
+  <script>
+    // Replace with your Rive file URL from the Rive community
+    // Recommended: Use one of these free community animations:
+    // 1. Soft Blob: https://cdn.rive.app/animations/soft-blob-background.riv
+    // 2. Gradient Flow: https://cdn.rive.app/animations/gradient-flow.riv
+    // 3. Particle System: https://cdn.rive.app/animations/particle-background.riv
+    const RIVE_FILE_URL = "https://cdn.rive.app/community/runtime_files/21530-40624-animated-logo.riv";
+
+    // If user prefers reduced motion, do nothing
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // skip animation
+      console.log('Reduced motion preference detected - skipping Rive animation');
+    } else {
+      const canvas = document.getElementById('riveCanvas');
+      let riveInstance = null;
+
+      // Resize canvas to cover the viewport with high DPI support
+      function resizeCanvas() {
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = window.innerWidth * dpr;
+        canvas.height = window.innerHeight * dpr;
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+        
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.scale(dpr, dpr);
+        }
+      }
+
+      window.addEventListener('resize', resizeCanvas, { passive: true });
+      resizeCanvas();
+
+      // Initialize Rive
+      try {
+        riveInstance = new rive.Rive({
+          src: RIVE_FILE_URL,
+          canvas: canvas,
+          autoplay: true,
+          // Layout options for full coverage
+          layout: new rive.Layout({
+            fit: rive.Fit.COVER,
+            alignment: rive.Alignment.CENTER
+          }),
+          // Keep this lightweight — rely on GPU transforms done by Rive runtime
+        });
+
+        console.log('Rive animation loaded successfully');
+      } catch (error) {
+        console.error('Error loading Rive animation:', error);
+      }
+
+      // Optional gentle parallax based on pointer (low amplitude)
+      let lastX = 0, lastY = 0;
+      let rafId = null;
+
+      function updateParallax(e) {
+        if (rafId) cancelAnimationFrame(rafId);
+        
+        rafId = requestAnimationFrame(() => {
+          // Small transforms for depth (non-invasive)
+          const px = (e.clientX / window.innerWidth - 0.5) * 8; // range ~ -4..4
+          const py = (e.clientY / window.innerHeight - 0.5) * 8;
+          
+          // Apply subtle transform to canvas element (not Rive internals)
+          canvas.style.transform = `translate(${px}px, ${py}px)`;
+        });
+      }
+
+      window.addEventListener('pointermove', updateParallax, { passive: true });
+
+      // Cleanup on page unload
+      window.addEventListener('beforeunload', () => {
+        if (riveInstance && riveInstance.cleanup) {
+          riveInstance.cleanup();
+        }
+      });
+    }
+  </script>
+</body>
+</html>
+
+

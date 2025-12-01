@@ -1,0 +1,385 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(135deg, rgba(147, 197, 253, 0.5) 0%, rgba(196, 181, 253, 0.6) 50%, rgba(251, 113, 133, 0.5) 100%);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  transition: background 0.3s ease;
+}
+
+/* Dark mode styles */
+.dark body {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(51, 65, 85, 0.95) 50%, rgba(71, 85, 105, 0.95) 100%);
+  color: rgb(248, 250, 252);
+}
+
+.dark .text-gray-900 {
+  color: rgb(248, 250, 252);
+}
+
+.dark .text-gray-800 {
+  color: rgb(241, 245, 249);
+}
+
+.dark .text-gray-700 {
+  color: rgb(226, 232, 240);
+}
+
+.dark .bg-gray-100 {
+  background-color: rgb(30, 41, 59);
+}
+
+.dark .bg-gray-50 {
+  background-color: rgb(15, 23, 42);
+}
+
+.dark .border-gray-200 {
+  border-color: rgb(51, 65, 85);
+}
+
+.dark .border-gray-300 {
+  border-color: rgb(71, 85, 105);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Smooth scroll animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Enhanced backdrop blur support */
+@supports (backdrop-filter: blur(12px)) {
+  .backdrop-blur-md {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
+
+/* Smooth transitions for all interactive elements */
+button, a {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Animated background shapes */
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(30px, -30px) rotate(120deg);
+  }
+  66% {
+    transform: translate(-20px, 20px) rotate(240deg);
+  }
+}
+
+.animated-shape {
+  position: absolute;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(168, 85, 246, 0.1));
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  animation: float 20s ease-in-out infinite;
+  filter: blur(40px);
+}
+
+/* Radial gradient overlay */
+.gradient-radial {
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+}
+
+/* Primary color for typing cursor */
+.text-primary {
+  color: #3b82f6;
+}
+
+.bg-primary {
+  background-color: #3b82f6;
+}
+
+.border-primary {
+  border-color: #3b82f6;
+}
+
+/* Shine animation for elegant text */
+@keyframes shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  50%, 100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Purple edge glow animation for buttons */
+@keyframes purpleGlow {
+  0%, 100% {
+    box-shadow: 
+      0 0 5px rgba(244, 187, 255, 0.5),
+      0 0 10px rgba(244, 187, 255, 0.3),
+      0 0 15px rgba(244, 187, 255, 0.2),
+      inset 0 0 5px rgba(244, 187, 255, 0.1);
+    border-color: rgba(244, 187, 255, 0.6);
+  }
+  25% {
+    box-shadow: 
+      0 0 8px rgba(244, 187, 255, 0.7),
+      0 0 15px rgba(244, 187, 255, 0.5),
+      0 0 20px rgba(244, 187, 255, 0.3),
+      inset 0 0 8px rgba(244, 187, 255, 0.2);
+    border-color: rgba(244, 187, 255, 0.8);
+  }
+  50% {
+    box-shadow: 
+      0 0 10px rgba(232, 168, 255, 0.8),
+      0 0 20px rgba(232, 168, 255, 0.6),
+      0 0 30px rgba(232, 168, 255, 0.4),
+      inset 0 0 10px rgba(232, 168, 255, 0.3);
+    border-color: rgba(232, 168, 255, 1);
+  }
+  75% {
+    box-shadow: 
+      0 0 8px rgba(244, 187, 255, 0.7),
+      0 0 15px rgba(244, 187, 255, 0.5),
+      0 0 20px rgba(244, 187, 255, 0.3),
+      inset 0 0 8px rgba(244, 187, 255, 0.2);
+    border-color: rgba(244, 187, 255, 0.8);
+  }
+}
+
+/* Purple edge sparkle effect */
+@keyframes purpleSparkle {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Button with purple edge glow */
+.button-purple-glow {
+  position: relative;
+  border: 2px solid rgba(244, 187, 255, 0.6);
+  animation: purpleGlow 3s ease-in-out infinite;
+  overflow: hidden;
+}
+
+.button-purple-glow::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(244, 187, 255, 0.5) 50%,
+    transparent 70%
+  );
+  background-size: 200% 200%;
+  animation: purpleSparkle 2s linear infinite;
+  border-radius: inherit;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.button-purple-glow::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(244, 187, 255, 0.4),
+    transparent
+  );
+  animation: shine 3s infinite;
+  pointer-events: none;
+}
+
+/* Shining lavender text for project buttons */
+@keyframes lavenderShine {
+  0%, 100% {
+    color: #E6B3FF;
+    text-shadow: 
+      0 0 5px rgba(230, 179, 255, 0.6),
+      0 0 10px rgba(244, 187, 255, 0.4),
+      0 0 15px rgba(244, 187, 255, 0.3);
+  }
+  50% {
+    color: #F4BBFF;
+    text-shadow: 
+      0 0 8px rgba(244, 187, 255, 0.8),
+      0 0 15px rgba(244, 187, 255, 0.6),
+      0 0 20px rgba(244, 187, 255, 0.4);
+  }
+}
+
+.shining-lavender-text {
+  color: #E6B3FF;
+  animation: lavenderShine 2s ease-in-out infinite;
+  text-shadow: 
+    0 0 5px rgba(230, 179, 255, 0.6),
+    0 0 10px rgba(244, 187, 255, 0.4),
+    0 0 15px rgba(244, 187, 255, 0.3);
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* White edge glow animation for buttons (inverted) */
+@keyframes whiteGlow {
+  0%, 100% {
+    box-shadow: 
+      0 0 5px rgba(255, 255, 255, 0.5),
+      0 0 10px rgba(255, 255, 255, 0.3),
+      0 0 15px rgba(255, 255, 255, 0.2),
+      inset 0 0 5px rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+  25% {
+    box-shadow: 
+      0 0 8px rgba(255, 255, 255, 0.7),
+      0 0 15px rgba(255, 255, 255, 0.5),
+      0 0 20px rgba(255, 255, 255, 0.3),
+      inset 0 0 8px rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.8);
+  }
+  50% {
+    box-shadow: 
+      0 0 10px rgba(255, 255, 255, 0.8),
+      0 0 20px rgba(255, 255, 255, 0.6),
+      0 0 30px rgba(255, 255, 255, 0.4),
+      inset 0 0 10px rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 1);
+  }
+  75% {
+    box-shadow: 
+      0 0 8px rgba(255, 255, 255, 0.7),
+      0 0 15px rgba(255, 255, 255, 0.5),
+      0 0 20px rgba(255, 255, 255, 0.3),
+      inset 0 0 8px rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+/* White edge sparkle effect */
+@keyframes whiteSparkle {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Button with white edge glow (inverted version) */
+.button-white-glow {
+  position: relative;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  animation: whiteGlow 3s ease-in-out infinite;
+  overflow: hidden;
+}
+
+.button-white-glow::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 70%
+  );
+  background-size: 200% 200%;
+  animation: whiteSparkle 2s linear infinite;
+  border-radius: inherit;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.button-white-glow::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: shine 3s infinite;
+  pointer-events: none;
+}
+
