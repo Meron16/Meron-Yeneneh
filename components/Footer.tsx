@@ -64,7 +64,6 @@ export default function Footer() {
                 filter: 'drop-shadow(0 20px 40px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 25px rgba(255, 255, 255, 0.4)) drop-shadow(0 10px 25px rgba(255, 255, 255, 0.3))',
                 transform: 'translateZ(50px) rotateX(15deg) rotateY(-5deg)',
                 WebkitTextStroke: '3px rgba(255, 255, 255, 0.3)',
-                textStroke: '3px rgba(255, 255, 255, 0.3)',
               }}
             >
               +
