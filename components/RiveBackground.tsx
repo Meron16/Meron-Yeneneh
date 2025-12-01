@@ -64,6 +64,7 @@ const RiveBackground: React.FC<RiveBackgroundProps> = ({
         
         // Try to import from node_modules first
         try {
+          // Type declaration allows this to compile even if rive-js is not installed
           const riveModule = await import('rive-js')
           // Handle different export formats
           RiveLib = riveModule.default || riveModule.Rive || riveModule
@@ -77,10 +78,10 @@ const RiveBackground: React.FC<RiveBackgroundProps> = ({
           if (typeof window !== 'undefined' && (window as any).rive) {
             RiveLib = (window as any).rive
           } else {
-            throw new Error(
-              'rive-js not found. Install it: npm install rive-js\n' +
-              'Or add to index.html: <script src="https://unpkg.com/rive-js@latest/dist/rive.min.js"></script>'
-            )
+            // Silently fail if rive-js is not available (component is optional)
+            console.warn('Rive animation not available. Install rive-js or use CDN fallback.')
+            setError('Rive animation library not found')
+            return
           }
         }
 
