@@ -56,6 +56,7 @@ const RiveBackground: React.FC<RiveBackgroundProps> = ({
     }
 
     let mounted = true
+    let cleanupFn: (() => void) | null = null
 
     const initRive = async () => {
       try {
@@ -154,8 +155,8 @@ const RiveBackground: React.FC<RiveBackgroundProps> = ({
 
         window.addEventListener('pointermove', handlePointerMove, { passive: true })
 
-        // Cleanup function
-        return () => {
+        // Store cleanup function
+        cleanupFn = () => {
           mounted = false
           window.removeEventListener('resize', handleResize)
           window.removeEventListener('pointermove', handlePointerMove)
@@ -182,12 +183,12 @@ const RiveBackground: React.FC<RiveBackgroundProps> = ({
       }
     }
 
-    const cleanup = initRive()
+    initRive()
 
     return () => {
       mounted = false
-      if (cleanup && typeof cleanup === 'function') {
-        cleanup()
+      if (cleanupFn) {
+        cleanupFn()
       }
     }
   }, [src, autoplay, scale])
