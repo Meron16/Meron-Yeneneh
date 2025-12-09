@@ -1,6 +1,4 @@
-# Osei Portfolio Clone
 
-A complete clone of the Osei portfolio website (https://osei.framer.website/) built with Next.js, React, TypeScript, Tailwind CSS, and Framer Motion.
 
 ## Features
 
